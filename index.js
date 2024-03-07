@@ -8,31 +8,27 @@ const server = http.createServer((request, response) => {
   if (url.searchParams.has("hello")) {
     const name = url.searchParams.get("hello");
     if (name) {
-      response.statusCode = 200;
       response.statusMessage = "OK";
-      response.setHeader("Content-Type", "text/plain");
+      response.writeHead(200, { "Content-Type": "text/plain" });
       response.end(`Hello, ${name}.`);
     } else {
-      response.statusCode = 400;
-      response.setHeader("Content-Type", "text/plain");
+      response.writeHead(400, { "Content-Type": "text/plain" });
       response.end("Enter a name");
     }
     return;
   }
 
   if (url.searchParams.has("users")) {
-    response.statusCode = 200;
     response.statusMessage = "OK";
-    response.setHeader("Content-Type", "application/json");
+    response.writeHead(200, { "Content-Type": "application/json" });
     response.write(JSON.stringify(getUsers()));
     response.end();
     return;
   }
 
   if (url.search === "") {
-    response.statusCode = 200;
     response.statusMessage = "OK";
-    response.setHeader("Content-Type", "text/plain");
+    response.writeHead(200, { "Content-Type": "text/plain" });
     response.end("Hello, World!");
     return;
   }
